@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>回顾Objec.defineproperty方法t</title>
+  </head>
+  <body>
+    <script>
+      let number = 19
+      let person = {
+        name: 'CuanXxx',
+        sex: 'man',
+      }
+
+      Object.defineProperty(person, 'age', {
+        // value: 18,
+        // enumerable: true, // 控制属性是否可以枚举 默认false
+        // writable: true, // 控制属性是否可修改 默认false
+        // configurable: true, //控制属性是否可被删除 默认false
+
+        // 当有人读取person对象中age属性时调用,且返回的就是age值
+        get() {
+          return number
+        },
+
+        // 当有人修改了person对象中age属性时调用,且会收到修改的具体值
+        set(value) {
+          number = value
+        },
+      })
+    </script>
+  </body>
+</html>
