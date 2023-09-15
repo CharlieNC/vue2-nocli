@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../yexuan.ico" type="image/x-icon" />
+    <title>天气案例_深度监视_简写</title>
+  </head>
+  <body>
+    <!-- 
+
+    -->
+    <div id="root">
+      <h2>今天天气{{info}}</h2>
+      <button @click="changeWeather">切换天气</button>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+      Vue.config.productionTip = false
+      new Vue({
+        el: '#root',
+        data: {
+          isHot: true,
+        },
+        methods: {
+          changeWeather() {
+            this.isHot = !this.isHot
+          },
+        },
+        computed: {
+          info() {
+            return this.isHot ? '炎热' : '凉爽'
+          },
+        },
+        watch: {
+          // 正常写法
+          /* isHot: {
+            immediate: true, // 立即执行
+            deep: true, // 深度监视
+            handler(newValue, oldValue) {
+              console.log('今天天气')
+            },
+          }, */
+
+          // 简写
+          isHot(newValue, oldValue) {
+            console.log('天气修改', newValue, oldValue)
+          },
+        },
+      })
+    </script>
+  </body>
+</html>
