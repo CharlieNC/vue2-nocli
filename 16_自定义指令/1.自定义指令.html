@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../yexuan.ico" type="image/x-icon" />
+    <title>自定义指令</title>
+  </head>
+  <body>
+    <!-- 
+      需求1: 定义一个v-big指令，和v-text功能类似，但会把绑定的数值放大10倍。
+      需求2: 定义一个v-fbind指令，和v-bind功能类似，但可以让其所绑定的input元素默认获取焦点。
+    -->
+    <div id="root">
+      <h2>当前的N值是：<span v-text="n"></span></h2>
+      <h2>放大10倍的N值是：<span v-big="n"></span></h2>
+      <button @click="n++">n+1</button>
+      <hr />
+      <input type="text" :value="n" />
+      <input type="text" v-fbind:value="n" />
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+      Vue.config.productionTip = false
+      // 全局自定义指令
+      Vue.directive('fbind', {
+        bind(el, binding) {
+          el.value = binding.value
+        },
+        inserted(el, binding) {
+          el.focus()
+        },
+        update(el, binding) {
+          el.value = binding.value
+        },
+      })
+      new Vue({
+        el: '#root',
+        data: {
+          n: 1,
+        },
+        directives: {
+          // 定义一个v-big指令
+          // big函数何时调用： 1.指令与元素绑定时调用 2. 指令所在的模板被解析时调用(元素插入到DOM时调用)
+          big(el, binding) {
+            el.innerText = binding.value * 10
+          },
+          fbind: {
+            // 定义一个v-fbind指令
+            bind(el, binding) {
+              // 指令与元素绑定时调用
+              el.value = binding.value
+            },
+            inserted(el, binding) {
+              // 指令所在的模板被解析时调用(元素插入到DOM时调用)
+              // 给指令所在的元素绑定一个input事件
+              // 事件回调函数中调用binding.value
+              // 指令所在的元素.value = binding.value
+              // el.focus()
+              el.focus()
+            },
+            update(el, binding) {
+              // 指令所在的模板被解析时调用(元素插入到DOM时调用)
+              el.value = binding.value
+            },
+          },
+        },
+      })
+    </script>
+  </body>
+</html>
