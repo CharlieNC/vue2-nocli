@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../yexuan.ico" type="image/x-icon" />
+    <title>组件的嵌套</title>
+  </head>
+  <body>
+    <!-- 
+
+    -->
+    <div id="root"></div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+      Vue.config.productionTip = false
+
+      //student组件
+      const student = Vue.extend({
+        name: 'student',
+        template: `
+          <div>
+            <h2>学生姓名：{{name}}</h2>
+            <h2>学生年龄：{{age}}</h2>
+          </div>
+        `,
+        data() {
+          return {
+            name: 'CuanXxx',
+            age: 18,
+          }
+        },
+      })
+
+      //school组件
+      const school = Vue.extend({
+        name: 'school',
+        template: `
+          <div>
+            <h2>学校名称：{{schoolName}}</h2>
+            <h2>学校地址：{{address}}</h2>
+            <student></student>
+          </div>
+        `,
+        data() {
+          return {
+            schoolName: '江西科技学院',
+            address: '江西',
+          }
+        },
+        // 注册组件(局部注册)
+        components: {
+          student,
+        },
+      })
+
+      // 定义一个hello组件
+      const hello = Vue.extend({
+        name: 'hello',
+        template: `
+        <h2>{{msg}}</h2>
+        `,
+        data() {
+          return {
+            msg: 'hello world',
+          }
+        },
+      })
+
+      //定义app组件
+      const app = Vue.extend({
+        template: `
+          <div>
+            <hello></hello>
+            <school></school>
+          </div>
+        `,
+        components: {
+          school,
+          hello,
+        },
+      })
+
+      //创建vm
+      new Vue({
+        template: `<app></app>`,
+        el: '#root',
+        //第二步：注册组件(局部注册)
+        components: {
+          app,
+        },
+      })
+    </script>
+  </body>
+</html>
