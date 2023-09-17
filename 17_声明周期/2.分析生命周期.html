@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="../yexuan.ico" type="image/x-icon" />
+    <title>分析声明周期</title>
+  </head>
+  <body>
+    <!-- 
+
+    -->
+    <div id="root">
+      <h2>当前的N值是：{{n}}</h2>
+      <button @click="add">n+1</button>
+      <button @click="bye">销毁</button>
+    </div>
+
+    <script src="../js/vue.js"></script>
+    <script>
+      Vue.config.productionTip = false
+      new Vue({
+        el: '#root',
+        data: {
+          n: 1,
+        },
+        methods: {
+          add() {
+            console.log('add')
+            this.n++
+          },
+          bye() {
+            console.log('bye')
+            this.$destroy()
+          },
+        },
+        watch: {
+          n() {
+            console.log('n变化了')
+          },
+        },
+        beforeCreate() {
+          console.log('beforeCreate')
+          // console.log(this)
+          // debugger
+        },
+        created() {
+          console.log('created')
+          // console.log(this)
+          // debugger;
+        },
+        beforeMount() {
+          console.log('beforeMount')
+          // console.log(this)
+          // debugger
+        },
+        mounted() {
+          console.log('mounted')
+          // console.log(this)
+          // debugger
+        },
+        beforeUpdate() {
+          console.log('beforeUpdate')
+          // console.log(this.n)
+          // debugger
+        },
+        updated() {
+          console.log('updated')
+          // console.log(this.n)
+          // debugger
+        },
+        beforeDestroy() {
+          console.log('beforeDestroy')
+          // console.log(this.n)
+          // this.add() //可以调用 但是页面不渲染了
+          // debugger
+        },
+        destroyed() {
+          console.log('destroyed')
+          // console.log(this)
+          // debugger
+        },
+      })
+
+      // 通过外部的定时器实现(不推荐)
+      /* setInterval(() => {
+        vm.opacity -= 0.01
+        if (vm.opacity <= 0) {
+          vm.opacity = 1
+        }
+      },16) */
+    </script>
+  </body>
+</html>
